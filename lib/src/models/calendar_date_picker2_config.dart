@@ -167,6 +167,7 @@ class CalendarDatePicker2Config {
     this.scrollViewOnScrolling,
     this.scrollViewController,
     this.dynamicCalendarRows,
+    this.scrollOffset = true,
   })  : calendarType = calendarType ?? CalendarDatePicker2Type.single,
         firstDate = DateUtils.dateOnly(firstDate ?? DateTime(1970)),
         lastDate =
@@ -391,6 +392,8 @@ class CalendarDatePicker2Config {
   /// If it is [CalendarDatePicker2Mode.year] users can only select years. Returning always the First Day of that year
   final CalendarDatePicker2Mode finestMode;
 
+  final bool scrollOffset;
+
   /// Copy the current [CalendarDatePicker2Config] with some new values
   CalendarDatePicker2Config copyWith({
     CalendarDatePicker2Type? calendarType,
@@ -457,6 +460,7 @@ class CalendarDatePicker2Config {
     ScrollController? scrollViewController,
     bool? dynamicCalendarRows,
     CalendarDatePicker2Mode? finestMode,
+    bool scrollOffset = true,
   }) {
     return CalendarDatePicker2Config(
       calendarType: calendarType ?? this.calendarType,
@@ -630,7 +634,8 @@ class CalendarDatePicker2WithActionButtonsConfig
     this.openedFromDialog,
     this.closeDialogOnCancelTapped,
     this.closeDialogOnOkTapped,
-    this.buttonPadding,
+    this.buttonPadding, 
+    bool scrollOffset = true,
   }) : super(
           calendarType: calendarType,
           firstDate: firstDate,
@@ -696,6 +701,7 @@ class CalendarDatePicker2WithActionButtonsConfig
           scrollViewController: scrollViewController,
           dynamicCalendarRows: dynamicCalendarRows,
           finestMode: finestMode,
+          scrollOffset: scrollOffset
         );
 
   /// The gap between calendar and action buttons
@@ -800,6 +806,7 @@ class CalendarDatePicker2WithActionButtonsConfig
     ScrollController? scrollViewController,
     bool? dynamicCalendarRows,
     CalendarDatePicker2Mode? finestMode,
+    bool? scrollOffset,
   }) {
     return CalendarDatePicker2WithActionButtonsConfig(
       calendarType: calendarType ?? this.calendarType,
@@ -906,6 +913,7 @@ class CalendarDatePicker2WithActionButtonsConfig
       scrollViewController: scrollViewController ?? this.scrollViewController,
       dynamicCalendarRows: dynamicCalendarRows ?? this.dynamicCalendarRows,
       finestMode: finestMode ?? this.finestMode,
+      scrollOffset: scrollOffset ?? this.scrollOffset
     );
   }
 }

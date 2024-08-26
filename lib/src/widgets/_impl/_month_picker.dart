@@ -61,7 +61,9 @@ class _MonthPickerState extends State<_MonthPicker> {
           widget.selectedDates.isNotEmpty && widget.selectedDates[0] != null
               ? _scrollOffsetForMonth(widget.selectedDates[0]!)
               : _scrollOffsetForMonth(DateUtils.dateOnly(DateTime.now()));
-      _scrollController.jumpTo(scrollOffset);
+      if (widget.config.scrollOffset) {
+        _scrollController.jumpTo(scrollOffset);
+      }
     }
   }
 
