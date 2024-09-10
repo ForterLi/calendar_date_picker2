@@ -301,6 +301,10 @@ class _CalendarDatePicker2State extends State<CalendarDatePicker2> {
           }
 
           break;
+        case CalendarDatePicker2Type.week:
+          final daysWeek = daysOfWeek(value,  widget.config.firstDayOfWeek ?? _localizations.firstDayOfWeekIndex);
+          selectedDates = daysWeek;
+          break;
       }
 
       selectedDates

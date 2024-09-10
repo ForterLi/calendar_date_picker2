@@ -229,6 +229,22 @@ class _DayPickerState extends State<_DayPicker> {
           customDayTextStyle = widget.config.selectedRangeDayTextStyle;
         }
 
+        // week
+        final isFullySelectedWeekPicker =
+            widget.config.calendarType == CalendarDatePicker2Type.week &&
+                widget.selectedDates.length == 7;
+        var isDateInWeekPickerSelectedDates = false;
+
+        if (isFullySelectedWeekPicker) {
+          final startDate = DateUtils.dateOnly(widget.selectedDates.first);
+          final endDate = DateUtils.dateOnly(widget.selectedDates.last);
+
+          isDateInWeekPickerSelectedDates =
+              !(dayToBuild.isBefore(startDate) ||
+                      dayToBuild.isAfter(endDate)) &&
+                  !DateUtils.isSameDay(startDate, endDate);
+        }
+
         if (isSelectedDay) {
           customDayTextStyle = widget.config.selectedDayTextStyle;
         }
@@ -251,14 +267,66 @@ class _DayPickerState extends State<_DayPicker> {
               dayTextStyle,
             );
 
-        if (isDateInBetweenRangePickerSelectedDates) {
+        if (isDateInWeekPickerSelectedDates) {
+          final weekPickerIncludedDayDecoration = BoxDecoration(
+            color: widget.config.selectedRangeHighlightColor ??
+                (widget.config.selectedDayHighlightColor ??
+                        selectedDayBackground),
+          );
+
+          if (DateUtils.isSameDay(
+            DateUtils.dateOnly(widget.selectedDates.first),
+            dayToBuild,
+          )) {
+            dayWidget = Stack(
+              children: [
+                Row(children: [
+                  const Spacer(),
+                  Expanded(
+                    child: Container(
+                      decoration: weekPickerIncludedDayDecoration,
+                    ),
+                  ),
+                ]),
+                dayWidget,
+              ],
+            );
+          } else if (DateUtils.isSameDay(
+            DateUtils.dateOnly(widget.selectedDates.last),
+            dayToBuild,
+          )) {
+            dayWidget = Stack(
+              children: [
+                Row(children: [
+                  Expanded(
+                    child: Container(
+                      decoration:weekPickerIncludedDayDecoration,
+                    ),
+                  ),
+                  const Spacer(),
+                ]),
+                dayWidget,
+              ],
+            );
+          } else {
+            dayWidget = Stack(
+              children: [
+                Container(
+                  decoration:weekPickerIncludedDayDecoration,
+                ),
+                dayWidget,
+              ],
+            );
+          }
+        }
+
+         if (isDateInBetweenRangePickerSelectedDates) {
           final rangePickerIncludedDayDecoration = BoxDecoration(
             color: widget.config.selectedRangeHighlightColor ??
                 (widget.config.selectedDayHighlightColor ??
                         selectedDayBackground)
                     .withOpacity(0.15),
           );
-
           if (DateUtils.isSameDay(
             DateUtils.dateOnly(widget.selectedDates[0]),
             dayToBuild,

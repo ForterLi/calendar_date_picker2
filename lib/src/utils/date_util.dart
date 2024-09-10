@@ -49,3 +49,12 @@ int getDayRowsCount(int year, int month, int firstDayOfWeekIndex) {
   final int remainingDays = totalDays - (7 - monthFirstDayOffset);
   return (remainingDays / 7).ceil() + 1;
 }
+
+  List<DateTime> daysOfWeek(DateTime date, int firstDayOfWeekIndex) {
+    int daysSinceStartOfWeek =
+        (date.weekday - firstDayOfWeekIndex + 7) % 7;
+    final fristDayOfWeek = date.subtract(Duration(days: daysSinceStartOfWeek));
+    return List.generate(7, (index) {
+      return fristDayOfWeek.add(Duration(days: index));
+    });
+  }
